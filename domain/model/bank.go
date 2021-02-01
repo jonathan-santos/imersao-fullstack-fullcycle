@@ -1,14 +1,16 @@
 package model
 
 import (
+	"github.com/asaskevich/govalidator"
 	uuid "github.com/satori/go.uuid"
 	"time"
 )
 
 type Bank struct {
-	Base        `valid:"required"`
-	Code string `json:"code" valid:"notnull"`
-	Name string `json:"name" valid:"notnull"`
+	Base                `valid:"required"`
+	Code     string     `json:"code" valid:"notnull"`
+	Name     string     `json:"name" valid:"notnull"`
+	Accounts []*Account `valid:"-"`
 }
 
 func (bank *Bank) isValid() error {
