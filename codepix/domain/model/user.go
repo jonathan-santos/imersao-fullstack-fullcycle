@@ -9,7 +9,7 @@ import (
 type User struct {
 	Base          `valid:"required"`
 	Name  string `json:"name" valid:"notnull"`
-	Email string `json:"name" valid:"notnull"` 
+	Email string `json:"email" valid:"notnull"` 
 }
 
 func (user *User) isValid() error {
