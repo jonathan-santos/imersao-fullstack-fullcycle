@@ -8,7 +8,7 @@ import (
 )
 
 type PixKeyRepositoryInterface interface {
-	RegisterPixKey(pixKey *PixKey) (*PixKey, error)
+	RegisterKey(pixKey *PixKey) (*PixKey, error)
 	FindKeyByKind(key string, kind string) (*PixKey, error)
 	AddBank(bank *Bank) error
 	AddAccount(account *Account) error
@@ -16,10 +16,10 @@ type PixKeyRepositoryInterface interface {
 }
 
 type PixKey struct {
-	Base               `validate:"required"`
+	Base               `valid:"required"`
 	Kind      string   `json:"kind" valid:"notnull"`
 	Key       string   `json:"key" valid:"notnull"`
-	AccountID string   `json:"accountID" valid:"notnull"`
+	AccountID string   `json:"account_id" valid:"notnull"`
 	Account   *Account `valid:"-"`
 	Status    string   `json:"status" valid:"notnull"`
 }
@@ -42,7 +42,7 @@ func (pixKey *PixKey) isValid() error {
 	return nil
 }
 
-func NewPixKey(account *Account, kind string, key string) (*PixKey, error) {
+func NewPixKey(kind string, account *Account, key string) (*PixKey, error) {
 	pixKey := PixKey{
 		Kind: kind,
 		Key: key,

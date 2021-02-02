@@ -7,7 +7,7 @@ import (
 )
 
 type User struct {
-	Base          `validate:"required"`
+	Base          `valid:"required"`
 	Name  string `json:"name" valid:"notnull"`
 	Email string `json:"name" valid:"notnull"` 
 }

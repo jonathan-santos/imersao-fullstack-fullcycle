@@ -25,9 +25,9 @@ type Transactions struct {
 }
 
 type Transaction struct {
-	Base                       `validate:"required"`
+	Base                       `valid:"required"`
 	AccountFrom       *Account `json:"owner_name" valid:"notnull"`
-	Ammount           float64  `json:"ammount" valid:"notnull"`
+	Amount            float64  `json:"amount" valid:"notnull"`
 	PixKeyTo          *PixKey  `json:"pix_key_to" valid:"-"`
 	Status            string   `json:"status" valid:"notnull"`
 	Description       string   `json:"description" valid:"notnull"`
@@ -37,8 +37,8 @@ type Transaction struct {
 func (transaction *Transaction) isValid() error {
 	_, err := govalidator.ValidateStruct(transaction)
 
-	if transaction.Ammount <= 0 {
-		return errors.New("ammount must be greater than 0")
+	if transaction.Amount <= 0 {
+		return errors.New("amount must be greater than 0")
 	}
 
 	if transaction.Status != TransactionPending && transaction.Status != TransactionCompleted && transaction.Status != TransactionError && transaction.Status != TransactionConfirmed {
@@ -56,10 +56,10 @@ func (transaction *Transaction) isValid() error {
 	return nil
 }
 
-func NewTransaction(accountFrom *Account, ammount float64, pixKeyTo *PixKey, description string) (*Transaction, error) {
+func NewTransaction(accountFrom *Account, amount float64, pixKeyTo *PixKey, description string) (*Transaction, error) {
 	transaction := Transaction{
 		AccountFrom: accountFrom,
-		Ammount: ammount,
+		Amount: amount,
 		PixKeyTo: pixKeyTo,
 		Status: TransactionPending,
 		Description: description,
