@@ -6,7 +6,6 @@ import (
 	"time"
 )
 
-
 func init() {
 	govalidator.SetFieldsRequiredByDefault(true)
 }
