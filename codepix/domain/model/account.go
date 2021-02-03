@@ -6,12 +6,17 @@ import (
 	"time"
 )
 
+
+func init() {
+	govalidator.SetFieldsRequiredByDefault(true)
+}
+
 type Account struct {
 	Base                `valid:"required"`
-	OwnerName string    `json:"owner_name" gorm="column:owner_name;type:varchar(255);not null" valid:"notnull"`
+	OwnerName string    `gorm:"column:owner_name;type:varchar(255);not null" valid:"notnull"`
 	Bank      *Bank     `valid:"-"`
 	BankID    string    `gorm:"column:bank_id;type:uuid;not null" valid:"-"`
-	Number    string    `json:"number" gorm:"varchar(20)" valid:"notnull"`
+	Number    string    `json:"number" gorm:"type:varchar(20)" valid:"notnull"`
 	PixKeys   []*PixKey `gorm:"ForeignKey:AccountID" valid:"-"`
 }
 
@@ -29,6 +34,7 @@ func NewAccount(bank *Bank, number string, ownerName string) (*Account, error) {
 	account := Account{
 		OwnerName: ownerName,
 		Bank:      bank,
+		BankID:    bank.ID,
 		Number:    number,
 	}
 
